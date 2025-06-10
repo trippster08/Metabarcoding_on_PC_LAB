@@ -1,8 +1,8 @@
-# Metabarcoding Pipeline in RStudio for LAB
-1. [Computer and RStudio Preparation](#1---computer-and-rstudio-preparation) </br>
+# Metabarcoding Pipeline on Personal Computer for LAB
+1. [Computer Preparation](#1---computer-preparation) </br>
   1.1. [Install and Update Computer Programs](#install-and-update-computer-programs) </br>
   1.2. [Create a New Project](#create-a-new-project) </br>
-  1.3. [RStudio Preparation](#rstudio-preparation) </br>
+  1.3. [R Preparation](#r-preparation) </br>
   1.4. [Get Raw Reads](#get-raw-reads) </br>
 2. [Cutadapt](#cutadapt) </br>
 3. [DADA2](#dada2) </br>
@@ -14,11 +14,11 @@
 
 
 
-This protocol is for paired-end demultiplexed miseq sequences that have sufficient overlap to merge R1 and R2, and are going to be run on your computer, not on Hydra. It is broken up into sections, each section an `.R` document that can be opened in RStudio. Once in RStudio, each command can be run using the `Run` button, or with `control + return`. The directions for each section are in that section file. You can download this entire pipeline, including the RStudio files using this link: [Metabarcoding Pipeline - RStudio Documents](https://github.com/trippster08/Metabarcoding-in-RStudio-LAB/archive/refs/heads/main.zip). I usually download a version of this pipeline for each run I analyse (in case any changes need to be made, and so the primer folder is in the correct place) and save it in the working directory of that run.
+This protocol is for paired-end demultiplexed miseq sequences that have sufficient overlap to merge R1 and R2, and are going to be run on your computer, not on Hydra. It is broken up into sections, each section an `.R` document that can be opened in RStudio or the IDE/Editor of your choosing (such as [vscode](https://code.visualstudio.com/) or [positron](https://positron.posit.co/)). Once in RStudio, each command can be run using the `Run` button, or with `control + return`. The directions for each section are in that section file. You can download this entire pipeline using this link: [Metabarcoding Pipeline - R Documents](https://github.com/trippster08/Metabarcoding_on_PC_LAB/archive/refs/heads/main.zip). We will download the pipeline below in [R Preparation](#r-preparation) below.
 
 However, before running RStudio, you must make sure the necessary programs are installed, and the illumina demultiplexed sequences have been downloaded.
 
-## 1 - Computer and RStudio Preparation
+## 1 - Computer Preparation
 ### Install and Update Computer Programs
 Make sure you have both R and RStudio already installed and updated on your computer. If you have an SI computer, you can load/update both through the Smithsonian's Self Service Application.
 
@@ -105,7 +105,7 @@ cutadapt --version
 ### Create a New Project
 The first thing to do is open RStudio and create a new project. If you already havea project directory for this project, select to create it from an "Existing Directory", and chose the directory that you will be using (this folder name will be the name of the project). Or select "New Directory" and name your new directory/project. RStudio will create this directory. Once you have created this project, RStudio will make this directory the current working directory, and you won't need to set your working directory later.
 
-### RStudio Preparation
+### R Preparation
 First, we are goiong to download the entire pipeline into our project directory using the script shown below. Copy the code block below into the Console panel (usually the entire left panel, or the bottom left panel if the Source Editor is open on the top left) of RStudio and run it. This will download the pipeline unzip it, and remove the zipped file.
 
 This is probably the only R code we will be running from the Console. We typically run all the scripts by opening each file in the Source Editor and running from there so we have a record of your analyses, including any changes made and any comments that may be needed along the way.
