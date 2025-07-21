@@ -360,14 +360,6 @@ head(nmds_scores_meta)
 nmds_scores_meta_plot <- ggplot(nmds_scores_meta, aes(x = NMDS1, y = NMDS2)) +
   geom_point(size = 4, aes(fill = depth_ft, color = depth_ft, shape = fraction))
 nmds_scores_meta_plot
-# I want
-# define hidden vegan function that finds coordinates for drawing a covariance ellipse
-veganCovEllipse <- function(cov, center = c(0, 0), scale = 1, npoints = 100) {
-  theta <- (0:npoints) * 2 * pi / npoints
-  Circle <- cbind(cos(theta), sin(theta))
-  t(center + scale * t(Circle %*% chol(cov)))
-}
-
 
 # We can do some very basic statistics to see if these factors are significantly
 # different.
