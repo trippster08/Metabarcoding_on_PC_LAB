@@ -10,12 +10,10 @@
 
 library(dada2)
 library(digest)
-library(phyloseq)
 library(tidyverse)
 library(seqinr)
-library(ape)
-library(DECIPHER)
-library(ade4)
+library(data.table)
+
 
 # Set up your working directory. If you created your new project in the
 # directory you want as your working directory (or came directory from the
@@ -113,7 +111,7 @@ feattab_project1_run2 <- feattab_repseq_project1_run2[,
 
 # Transpose this feature-table into a sequence table, and convert the first
 # columns/rows into headings.
-seqtab_project1_run2 <- transpose(
+seqtab_project1_run2 <- data.table::transpose(
   feattab_project1_run2,
   keep.names = "Sample",
   make.names = 1
