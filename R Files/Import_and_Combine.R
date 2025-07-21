@@ -196,7 +196,7 @@ feattab_project1_run2 <- feattab_repseq_project1_run2[,
 
 # Transpose this feature-table into a sequence table, and convert the first
 # column/row into headings.
-seqtab_project1_run2 <- transpose(
+seqtab_project1_run2 <- data.table::transpose(
   feattab_project1_run2,
   keep.names = "Sample",
   make.names = 1
@@ -253,7 +253,7 @@ feattab_project1_run1_wide <- pivot_wider(
 
 # Transpose this feature-table into a sequence table, and convert the first
 # column/row into headings.
-seqtab_project1_run1 <- transpose(
+seqtab_project1_run1 <- data.table::transpose(
   feattab_project1_run1_wide,
   keep.names = "Sample",
   make.names = 1
