@@ -111,12 +111,12 @@ First, we are goiong to download the entire pipeline into our project directory 
 This is probably the only R code we will be running from the Console. We typically run all the scripts by opening each file in the Source Editor and running from there so we have a record of your analyses, including any changes made and any comments that may be needed along the way.
 
 ```{R}
-pipeline <- "https://github.com/trippster08/Metabarcoding-in-RStudio-LAB/archive/refs/heads/main.zip"
+pipeline <- "https://github.com/trippster08/Metabarcoding_on_PC_LAB/archive/refs/heads/multi-gene.zip"
 download.file(pipeline, basename(pipeline))
 unzip(basename(pipeline))
 file.remove(basename(pipeline))
-file.rename("Metabarcoding_on_PC_LAB-main/primers", "primers")
-file.rename("Metabarcoding_on_PC_LAB-main/R_Files", "R_Files")
+file.rename("Metabarcoding_on_PC_LAB-multi-gene/"primers", "primers")
+file.rename("Metabarcoding_on_PC_LAB-multi-gene/R_Files", "RFiles")
 ```
 
 Next we install all the R libraries needed for this pipeline. We also set up our directory structure and find, load, and copy the raw Illumina read files to the directory from which they will be analyzed. 
