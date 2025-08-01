@@ -121,7 +121,7 @@ file.rename("Metabarcoding_on_PC_LAB-multi-gene/RFiles", "RFiles")
 
 Next we install all the R libraries needed for this pipeline. We also set up our directory structure and find, load, and copy the raw Illumina read files to the directory from which they will be analyzed. 
 
-Open RStudio, and open `1_RstudioPrep.R` in the Source Editor (typically the top left pane). You can run all commands in the source editor using the `Run` button or `control + return`.
+Open RStudio, and open `1_RstudioPrep.R` in the Source Editor (typically the top left pane). You can run all commands in the source editor using the `Run` button or `control + return`. All `*.R` files are in the `RFiles/` directory in the working directory and can be found using the "Files" tab in the Output pane, usually found at the bottom right. Clicking on the `*.R` file will open it in the Source Editor.
 
 [1.3 - Metabarcoding RStudioPrep.R](https://github.com/trippster08/Metabarcoding-in-RStudio-LAB/blob/main/RStudio%20Files/1_RStudioPrep.R)
 
