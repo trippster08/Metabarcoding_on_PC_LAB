@@ -115,7 +115,7 @@ pipeline <- "https://github.com/trippster08/Metabarcoding_on_PC_LAB/archive/refs
 download.file(pipeline, basename(pipeline))
 unzip(basename(pipeline))
 file.remove(basename(pipeline))
-file.rename("Metabarcoding_on_PC_LAB-multi-gene/"primers", "primers")
+file.rename("Metabarcoding_on_PC_LAB-multi-gene/primers", "primers")
 file.rename("Metabarcoding_on_PC_LAB-multi-gene/R_Files", "RFiles")
 ```
 
