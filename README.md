@@ -116,7 +116,7 @@ download.file(pipeline, basename(pipeline))
 unzip(basename(pipeline))
 file.remove(basename(pipeline))
 file.rename("Metabarcoding_on_PC_LAB-multi-gene/primers", "primers")
-file.rename("Metabarcoding_on_PC_LAB-multi-gene/R_Files", "RFiles")
+file.rename("Metabarcoding_on_PC_LAB-multi-gene/RFiles", "RFiles")
 ```
 
 Next we install all the R libraries needed for this pipeline. We also set up our directory structure and find, load, and copy the raw Illumina read files to the directory from which they will be analyzed. 
