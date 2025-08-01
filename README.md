@@ -115,6 +115,8 @@ pipeline <- "https://github.com/trippster08/Metabarcoding-in-RStudio-LAB/archive
 download.file(pipeline, basename(pipeline))
 unzip(basename(pipeline))
 file.remove(basename(pipeline))
+file.rename("Metabarcoding_on_PC_LAB-main/primers", "primers")
+file.rename("Metabarcoding_on_PC_LAB-main/R_Files", "R_Files")
 ```
 
 Next we install all the R libraries needed for this pipeline. We also set up our directory structure and find, load, and copy the raw Illumina read files to the directory from which they will be analyzed. 
