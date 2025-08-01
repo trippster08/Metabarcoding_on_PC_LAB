@@ -43,6 +43,9 @@ install.packages("rMSA", repos = "https://mhahsler.r-universe.dev")
 # Note: If you have spaces or special characters in the path to your working
 # directory, you don't need a character escape (i.e. no \ preceding spaces or
 # special characters) because the path is quoted..
+# Check your working directory
+getwd()
+# Change if it is not the directory for your current project
 setwd(
   "/Users/USERNAME/Dropbox (Smithsonian)/Projects_Metabarcoding/PROJECTNAME"
 )
@@ -51,21 +54,34 @@ project_name <- basename(getwd())
 project_name
 # Create all the subdirectories we will use
 # Define the directory names
-dir_names <- c(
+new_dir <- c(
   "data/raw",
   "data/working/trimmed_sequences",
   "data/results",
-  "ref"
+  "ref",
+  "primers/active"
 )
-# Make path to primer files
-path_to_primers
-# Set list of available primers
-available_primers <- c("COI", "18S", "MiFish", "28SAnth", "16Sbac")
-# Set list of primers with possble read-through
-RC_primers <- c("MiFish", "16Sbac")
 
 # Create the directories using sapply
-sapply(dir_names, dir.create, recursive = TRUE)
+sapply(new_dir, dir.create, recursive = TRUE)
+
+# Make path to regular primer files
+path_to_primers <- "primers"
+# Find all forward primers in the primer directory
+forward_primer_files <- list.files(
+  path_to_primers,
+  pattern = "F\\.fas$",
+  full.names = FALSE
+)
+# Remove the "F.fas" from the file name giving us the primer name
+available_primers <- sub("F\\.fas$", "", forward_primer_files)
+# Do the same for the primers that have reverse complement files
+rc_forward_primer_files <- list.files(
+  path_to_primers,
+  pattern = "F_RC\\.fas$",
+  full.names = FALSE
+)
+RC_primers <- sub("F_RC\\.fas$", "", rc_forward_primer_files)
 
 # Find all the read files in the project directory, save their paths, and
 # confirm. Basespace saves the reads in sample-specific folders, using
