@@ -29,7 +29,6 @@ install.packages("remotes")
 install.packages("R.utils")
 install.packages("phylotools")
 install.packages("data.table")
-remotes::install_github("ropensci/bold", upgrade = TRUE)
 remotes::install_github("ropensci/taxize", upgrade = TRUE)
 remotes::install_github("fkeck/refdb", upgrade = TRUE)
 remotes::install_github("tobiasgf/lulu", upgrade = TRUE)
@@ -43,7 +42,7 @@ install.packages("rMSA", repos = "https://mhahsler.r-universe.dev")
 # substitute your own path for the one below.
 # Note: If you have spaces or special characters in the path to your working
 # directory, you don't need a character escape (i.e. no \ preceding spaces or
-# special characters).
+# special characters) because the path is quoted..
 setwd(
   "/Users/USERNAME/Dropbox (Smithsonian)/Projects_Metabarcoding/PROJECTNAME"
 )
@@ -58,6 +57,13 @@ dir_names <- c(
   "data/results",
   "ref"
 )
+# Make path to primer files
+path_to_primers
+# Set list of available primers
+available_primers <- c("COI", "18S", "MiFish", "28SAnth", "16Sbac")
+# Set list of primers with possble read-through
+RC_primers <- c("MiFish", "16Sbac")
+
 # Create the directories using sapply
 sapply(dir_names, dir.create, recursive = TRUE)
 
@@ -71,3 +77,46 @@ head(raw_reads)
 # there.
 file.copy(raw_reads, "data/raw", recursive = TRUE)
 head(list.files("data/raw"))
+
+# Make a list of genes that will be analyzed in this pipeline, Regardless of
+# whether it's one or many. Make sure the primer sequences for these are in
+# the primer folder
+genes <- c("gene1", "gene2", "gene3")
+# Get number of genes
+gene_num <- length(genes)
+
+# Set a path to the directory containing raw reads.
+path_to_raw_reads <- "data/raw"
+# Set path to working directory
+path_to_working <- "data/working"
+# Set path to results directory
+path_to_results <- "data/results"
+# Set path to the directory (or directories, depending upon the number of genes)
+# of the trimmed sequences. This creates a list of paths, one path for each gene
+for (gene in genes) {
+  path_to_trimmed <- setNames(
+    lapply(genes, function(gene) {
+      paste0(
+        path_to_working,
+        "/trimmed_sequences/",
+        gene
+      )
+    }),
+    genes
+  )
+  dir.create(path_to_trimmed[[gene]])
+  # Set a path to the results directorie(s), as a list of paths, one for each gene
+  path_to_results <- setNames(
+    lapply(genes, function(gene) {
+      paste0(
+        path_to_results,
+        gene
+      )
+    }),
+    genes
+  )
+  dir.create(path_to_results[[gene]], recursive = TRUE)
+}
+
+# Save all objects in case you need to stop here.
+save.image(file = "data/working_1_RtudioPrep.RData")
