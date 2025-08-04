@@ -75,6 +75,8 @@ forward_primer_files <- list.files(
 )
 # Remove the "F.fas" from the file name giving us the primer name
 available_primers <- sub("F\\.fas$", "", forward_primer_files)
+available_primers
+
 # Do the same for the primers that have reverse complement files
 rc_forward_primer_files <- list.files(
   path_to_primers,
@@ -82,7 +84,7 @@ rc_forward_primer_files <- list.files(
   full.names = FALSE
 )
 RC_primers <- sub("F_RC\\.fas$", "", rc_forward_primer_files)
-
+RC_primers
 # Find all the read files in the project directory, save their paths, and
 # confirm. Basespace saves the reads in sample-specific folders, using
 # "recursive = TRUE" allows us to find all read files in the working directory
@@ -94,45 +96,49 @@ head(raw_reads)
 file.copy(raw_reads, "data/raw", recursive = TRUE)
 head(list.files("data/raw"))
 
-# Make a list of genes that will be analyzed in this pipeline, Regardless of
+# Make a list of genes that will be analyzed in this pipeline, regardless of
 # whether it's one or many. Make sure the primer sequences for these are in
-# the primer folder
+# the primer folder and the name is the same as the gene name
+# (see available_primers) for appropriate gene names
 genes <- c("gene1", "gene2", "gene3")
 # Get number of genes
 gene_num <- length(genes)
-
+genes
+gene_num
 # Set a path to the directory containing raw reads.
 path_to_raw_reads <- "data/raw"
 # Set path to working directory
 path_to_working <- "data/working"
 # Set path to results directory
-path_to_results <- "data/results"
+base_path_to_results <- "data/results"
 # Set path to the directory (or directories, depending upon the number of genes)
 # of the trimmed sequences. This creates a list of paths, one path for each gene
-for (gene in genes) {
-  path_to_trimmed <- setNames(
-    lapply(genes, function(gene) {
-      paste0(
-        path_to_working,
-        "/trimmed_sequences/",
-        gene
-      )
-    }),
-    genes
-  )
-  dir.create(path_to_trimmed[[gene]])
-  # Set a path to the results directorie(s), as a list of paths, one for each gene
-  path_to_results <- setNames(
-    lapply(genes, function(gene) {
-      paste0(
-        path_to_results,
-        gene
-      )
-    }),
-    genes
-  )
-  dir.create(path_to_results[[gene]], recursive = TRUE)
-}
+path_to_trimmed <- setNames(
+  lapply(genes, function(gene) {
+    dir_path <- file.path(
+      path_to_working,
+      "trimmed_sequences",
+      gene
+    )
+    dir.create(dir_path, recursive = TRUE)
+    dir_path
+  }),
+  genes
+)
+
+# Set a path to the results directorie(s), as a list of paths, one for each gene
+path_to_results <- setNames(
+  lapply(genes, function(gene) {
+    dir_path <- file.path(
+      base_path_to_results,
+      gene
+    )
+    dir.create(dir_path, recursive = TRUE)
+    dir_path
+  }),
+  genes
+)
+
 
 # Save all objects in case you need to stop here.
-save.image(file = "data/working_1_RtudioPrep.RData")
+save.image(file = "data/1_RtudioPrep.RData")
