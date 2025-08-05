@@ -642,7 +642,7 @@ for (gene in genes) {
     file.out = file.path(
       path_to_results[[gene]],
       paste0(
-        "/",
+        "additional_results/",
         project_name,
         "_",
         gene,
@@ -673,7 +673,7 @@ for (gene in genes) {
     file = file.path(
       path_to_results[[gene]],
       paste0(
-        "/",
+        "additional_results/",
         project_name,
         "_ASV_lengths_table_",
         gene,
@@ -759,7 +759,7 @@ for (gene in genes) {
     file = file.path(
       path_to_results[[gene]],
       paste0(
-        "/",
+        "additional_results/",
         project_name,
         "_track_reads_",
         gene,
@@ -899,7 +899,7 @@ for (gene in genes) {
   )
 }
 
-## Export Representative Sequences table/fasta ===============================
+## Export Representative Sequences fasta =======================================
 # Here we export our our representative sequences, either as a fasta (with the
 # md5 hash as the ASV name), or as a table with ASV and md5 hash as columns.
 
@@ -1012,7 +1012,7 @@ for (gene in genes) {
     file.out = file.path(
       path_to_results[[gene]],
       paste0(
-        "/",
+        "additional_results/",
         project_name,
         "_feature-to-fasta_",
         gene,

@@ -142,7 +142,7 @@ path_to_results <- setNames(
 # Create results directory, and two subdirectories: plots other_tables
 for (gene_path in path_to_results) {
   dir.create(file.path(gene_path, "plots"), recursive = TRUE)
-  dir.create(file.path(gene_path, "other_tables"), recursive = TRUE)
+  dir.create(file.path(gene_path, "additional_results"), recursive = TRUE)
 }
 
 # Save all objects in case you need to stop here.
