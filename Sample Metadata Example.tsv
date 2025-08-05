@@ -1,5 +1,4 @@
 sampleid	Index-Plate	Index-Well	Extract-Barcode	Infraorder	Sci-Name	I7-Index-ID	I7-Index	I5-Index-ID	I5-Index	Parent-Extraction-Id	Previous-Plate	Previous-Well	Extraction-Volume	Technician
-#q2:types	categorical	categorical	numeric	categorical	categorical	categorical	categorical	categorical	categorical	categorical	categorical	categorical	numeric	categorical
 ACEH-1063	P5	A08	132468829	Brachyura	Pilumnidae	N708	CAGAGAGG 	S501	TAGATCGC	INDO62596.1.1	PACEH-014-X1	C11	200	Amanda Windsor
 ACEH-1121	P3	C11	132463873	Brachyura	Xanthoidea	N726	CCTAAGAC	S503	TATCCTCT	INDO61804.1.1	PACEH-002-X1	H2	200	Amanda Windsor
 ACEH-1132	P3	C01	132463894	Anomura	Galathea-moritianna	N714	GCTCATGA	S503	TATCCTCT	INDO61926.1.1	PACEH-002-X1	G2	200	Amanda Windsor
