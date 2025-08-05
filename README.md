@@ -1,3 +1,5 @@
+![GitHub Release](https://img.shields.io/github/v/release/trippster08/Metabarcoding_on_PC_LAB?color=green)
+
 # Metabarcoding Pipeline on Personal Computer for LAB
 1. [Computer Preparation](#1---computer-preparation) </br>
   1.1. [Install and Update Computer Programs](#install-and-update-computer-programs) </br>
