@@ -55,7 +55,7 @@ project_name
 # Create all the subdirectories we will use
 # Define the directory names
 new_dir <- c(
-  "data/raw",
+  "data/raw/fastq",
   "data/working/trimmed_sequences",
   "data/results",
   "ref",
@@ -139,6 +139,10 @@ path_to_results <- setNames(
   genes
 )
 
+# Create results directory, and plots subdirectory
+for (gene_path in path_to_results) {
+  dir.create(file.path(gene_path, "plots"), recursive = TRUE)
+}
 
 # Save all objects in case you need to stop here.
-save.image(file = "data/1_RtudioPrep.RData")
+save.image(file = "data/working/1_RtudioPrep.RData")
