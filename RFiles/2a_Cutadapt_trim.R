@@ -14,7 +14,7 @@ library(R.utils)
 getwd()
 
 # Make a list of all the files in your "data/raw" folder for trimming.
-reads_to_trim <- list.files("data/raw")
+reads_to_trim <- list.files("data/raw", pattern = ".fastq.gz")
 head(reads_to_trim)
 # Separate files by read direction (R1,R2), and save each
 reads_to_trim_F <- reads_to_trim[str_detect(reads_to_trim, "R1_001.fastq.gz")]
@@ -36,6 +36,7 @@ sample_names_raw <- sapply(
   `[`,
   1
 )
+head(sample_names_raw)
 
 # Count the number of reads in each sample.
 sequence_counts_raw <- sapply(
@@ -218,18 +219,19 @@ if (!RC_found) {
   }
   file.remove(file.path("data/raw/fastq", list.files("data/raw/fastq")))
 }
-## gzip all trimmed fastq files
-# List of gene-specific folders
-trimmed_dirs <- list.dirs("data/working/trimmed_sequences", recursive = FALSE)
+
+# Cutadapt has an issue where it does not correctly compress large read files
+# so we have to do it here ourselve. Unfortunately, this takes some time.
+# List of gene-specific trimmed folders
 
 # Loop through each folder
-for (dir in trimmed_dirs) {
+for (dir in path_to_trimmed) {
   # List all .fastq files in the folder
   fastq_files <- list.files(dir, pattern = "\\.fastq$", full.names = TRUE)
 
   # Compress each file
   for (file in fastq_files) {
-    gzip(file, overwrite = TRUE, remove = TRUE)
+    gzip(file, overwrite = TRUE, compression = 2, remove = TRUE)
   }
 }
 

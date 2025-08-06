@@ -94,7 +94,7 @@ head(raw_reads)
 # Copy the read files to the "data/raw" directory, and confirm that they are
 # there.
 file.copy(raw_reads, "data/raw", recursive = TRUE)
-head(list.files("data/raw"))
+head(list.files("data/raw", pattern = ".fastq.gz"))
 
 # Make a list of genes that will be analyzed in this pipeline, regardless of
 # whether it's one or many. Make sure the primer sequences for these are in
