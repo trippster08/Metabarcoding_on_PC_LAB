@@ -150,7 +150,7 @@ cutadapt_binary <- "/home/macdonaldk/.conda/envs/cutadapt/bin/cutadapt"
 # fmt: skip
 if (!RC_found) {
   # Run cutadapt, only removing 5' primers
-  cat("Your reads should not have potential read-through, so we are only removing primers from the 5' end of each read")
+  cat("\nYour reads should not have potential read-through, so we are only removing primers from the 5' end of each read")
   for (i in seq_along(sample_names_raw)) {
     system2(
       cutadapt_binary,
@@ -175,7 +175,7 @@ if (!RC_found) {
   file.remove(file.path("data/raw/fastq", list.files("data/raw/fastq")))
 } else {
   # Run cutadapt, first removing 3' primers, then run again removing 5' primers
-  cat("Your reads have potential read-through, so we will attempt to trim primers from 3' read ends before 5'")
+  cat("\nYour reads have potential read-through, so we will attempt to trim primers from 3' read ends before 5'")
   for (i in seq_along(sample_names_raw)) {
     system2(
     cutadapt_binary,
