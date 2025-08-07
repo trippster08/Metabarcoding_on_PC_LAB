@@ -127,7 +127,6 @@ Open RStudio, and open `1_RstudioPrep.R` in the Source Editor (typically the top
 
 [1.3 - Metabarcoding RStudioPrep.R](https://github.com/trippster08/Metabarcoding-in-RStudio-LAB/blob/main/RStudio%20Files/1_RStudioPrep.R)
 
-
 ### Get Raw Reads
 Get raw reads. Whether you get them from Illumina basespace downloader or another way, all reads should already be in a directory. Place that direcectory in the main project directory. *NOTE: Remove any "undetermined" read files from the folder containing your raw reads. You do not want to include these reads in your analyses.*
 
@@ -141,13 +140,12 @@ Here we use DADA2 to quality-filter and quality-trim reads, estimate error rates
 
 [3 - DADA2](https://github.com/trippster08/Metabarcoding-in-RStudio-LAB/blob/main/RStudio%20Files/3a%20Metabarcoding_Dada2.R) </br>
 
-
 ## Assign Taxonomy
 Here we use an [RDP identifier](https://benjjneb.github.io/dada2/assign.html) through DADA2 and BLAST+ through [rBLAST](https://github.com/mhahsler/rBLAST) to assign taxonomic identities to ASV's. This section requires a reference library.  We will supply you with a reference library based on the [Midori](www.reference-midori.info) reference database, or you can supply your own. Open [4_TaxAssignment.R](RStudio_Files/4_TaxAssignment.R) and follow the directions.
 
 ## Visualize Results
 
-Here we primarily use the program [vegan](https://github.com/vegandevs/vegan) to visualize your results. We will explore our results multiple ways. Open [5_VisualizeResults.R](RStudio_Files/5_VisualizeResults.R) and follow the directions. vegan is a very expansive diversity tool and what we do here is only a fraction of it's capabilities. [vegan vignetes](https://vegandevs.r-universe.dev/vegan) is one place to find lots of links to other aspects of the program, although it gets a little into the weeds. Most of the visualization for this pipeline is from an unaffiliated website found here: [Vegan tutorial](https://peat-clark.github.io/BIO381/veganTutorial.html). Open [5_VisualizeResults.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB#assign-taxonomy)
+Here we primarily use the program [vegan](https://github.com/vegandevs/vegan) to visualize your results. We will explore our results multiple ways. Open [5_VisualizeResults.R](RStudio_Files/5_VisualizeResults.R) and follow the directions. vegan is a very expansive diversity tool and what we do here is only a fraction of it's capabilities. [vegan vignetes](https://vegandevs.r-universe.dev/vegan) is one place to find lots of links to other aspects of the program, although it gets a little into the weeds. Most of the visualization for this pipeline is from an unaffiliated website found here: [Vegan tutorial](https://peat-clark.github.io/BIO381/veganTutorial.html). Open [5_VisualizeResults.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB#assign-taxonomy) and follow the directions.
 
 ## phyloseq
 [phyloseq](https://github.com/joey711/phyloseq) is a R library that allows for manipulation, visualization, and analysis of metabarcoding data. This section describes how to set up and load your denoised results from DADA2 into phyloseq, how to perform some preliminary analyses, ana how to visualize a few basic results. Open [6_phyloseq.R](RStudio_Files/6_phyloseq.R) and follow the directions.
