@@ -146,4 +146,4 @@ for (gene_path in path_to_results) {
 }
 
 # Save all objects in case you need to stop here.
-save.image(file = "data/working/1_RtudioPrep.RData")
+save.image(file = "data/working/1_RStudioPrep.RData")
