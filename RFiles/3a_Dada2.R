@@ -20,7 +20,9 @@ library(ShortRead)
 # substitute your own path for the one below.
 # check to make sure you still have the correct working directory
 getwd()
-
+# Load the objects from the previous step, if you are not coming directly from
+# that step.
+load("data/working/2_trim.RData")
 ### Trimmed Reads --------------------------------------------------------------
 # Make a list of all gene-specific trimmed reads (it's a list of 3 gene-specific
 # vectors containing trimmed read names), with each gene-specific item
