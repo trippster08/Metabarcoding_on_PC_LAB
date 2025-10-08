@@ -12,6 +12,9 @@ library(R.utils)
 
 # check to make sure you still have the correct working directory
 getwd()
+# Load the objects from the previous step, if you are not coming directly from
+# that step.
+load("data/working/1_RStudioPrep.RData")
 
 # Make a list of all the files in your "data/raw" folder for trimming.
 reads_to_trim <- list.files("data/raw", pattern = ".fastq.gz")
@@ -172,7 +175,6 @@ if (!RC_found) {
       )
     )
   }
-  file.remove(file.path("data/raw/fastq", list.files("data/raw/fastq")))
 } else {
   # Run cutadapt, first removing 3' primers, then run again removing 5' primers
   cat("\nYour reads have potential read-through, so we will attempt to trim primers from 3' read ends before 5'")
@@ -221,10 +223,9 @@ if (!RC_found) {
 }
 
 # Cutadapt has an issue where it does not correctly compress large read files
-# so we have to do it here ourselve. Unfortunately, this takes some time.
-# List of gene-specific trimmed folders
+# so we have to do it here ourselves. Unfortunately, this takes some time.
 
-# Loop through each folder
+# Loop through each gene-specific folder
 for (dir in path_to_trimmed) {
   # List all .fastq files in the folder
   fastq_files <- list.files(dir, pattern = "\\.fastq$", full.names = TRUE)
