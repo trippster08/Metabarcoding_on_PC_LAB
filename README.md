@@ -10,9 +10,9 @@
 3. [DADA2](#dada2) </br>
 4. [Assign Taxonomy](#assign-taxonomy) </br>
 5. [Visualize Results](#assign-taxonomy) </br>
-6. [Phyloseq](#6---phyloseq) </br>
-7. [Reformat and Export Files](#4---reformat-and-export-files) </br>
-8. [Import and Combine Files](#5---import-and-combine-files) </br>
+6. [Phyloseq](#phyloseq) </br>
+7. [Reformat and Export Files](#reformat-and-export-files) </br>
+8. [Import and Combine Files](#import-and-combine-files) </br>
 
 
 
