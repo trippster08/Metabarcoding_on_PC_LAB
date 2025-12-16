@@ -72,7 +72,7 @@ actual_trimmed_reads <- setNames(vector("list", length(genes)), genes)
 sequence_counts_trimmed <- setNames(vector("list", length(genes)), genes)
 
 # For each gene, create a list of trimmed forward and trimmed reverse reads.
-# These are ephemeral for each gene, and are not
+# These are ephemeral for each gene, and are not saved after this loop.
 for (gene in genes) {
   # Count reads in R1 files
   sequence_counts_trimmed[[gene]] <- sapply(
