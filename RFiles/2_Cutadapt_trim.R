@@ -170,8 +170,8 @@ if (!RC_found) {
           sample_names_raw[i],
           "_trimmed_R2.fastq"
         ),
-        paste0("data/raw/", reads_to_trim_R1[i]),
-        paste0("data/raw/", reads_to_trim_R2[i])
+        paste0("data/raw/", reads_to_trim_F[i]),
+        paste0("data/raw/", reads_to_trim_R[i])
       )
     )
   }
