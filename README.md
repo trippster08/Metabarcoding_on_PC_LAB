@@ -156,7 +156,7 @@ Here we primarily use the program [vegan](https://github.com/vegandevs/vegan) to
 ## phyloseq
 [phyloseq](https://github.com/joey711/phyloseq) is a R library that allows for manipulation, visualization, and analysis of metabarcoding data. This section describes how to set up and load your denoised results from DADA2 into phyloseq, how to perform some preliminary analyses, ana how to visualize a few basic results.
 
-[6_phyloseq.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/6_phyloseq.R)
+[6 - phyloseq.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/6_phyloseq.R)
 
 ## Reformat and Export Files
 Here we create and export variants of the sequence-table created in section 3. Many of these are not necessary for your analysis, but may be useful in some cases, as described in the section descriptions. 
