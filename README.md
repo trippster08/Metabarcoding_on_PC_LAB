@@ -1,26 +1,25 @@
-![GitHub Release](https://img.shields.io/github/v/release/trippster08/Metabarcoding_on_PC_LAB?color=green)
+![GitHub Release](https://img.shields.io/github/v/release/trippster08/Metabarcoding_on_RStudio?color=green)
 
-# Metabarcoding Pipeline on Personal Computer for LAB
-1. [Computer Preparation](#1---computer-preparation) </br>
-  1.1. [Install and Update Computer Programs](#install-and-update-computer-programs) </br>
-  1.2. [Create a New Project](#create-a-new-project) </br>
-  1.3. [R Preparation](#r-preparation) </br>
-  1.4. [Get Raw Reads](#get-raw-reads) </br>
-2. [Cutadapt](#cutadapt) </br>
-3. [DADA2](#dada2) </br>
-4. [Assign Taxonomy](#assign-taxonomy) </br>
-5. [Visualize Results](#assign-taxonomy) </br>
-6. [Phyloseq](#phyloseq) </br>
-7. [Reformat and Export Files](#reformat-and-export-files) </br>
-8. [Import and Combine Files](#import-and-combine-files) </br>
+# Metabarcoding Pipeline on RStudio
+1. [Computer Preparation](#computer-preparation) </br>
+2. [RStudio Preparation](#rstudio-preparation) </br>
+3. [Cutadapt](#cutadapt) </br>
+4. [DADA2](#dada2) </br>
+5. [Assign Taxonomy](#assign-taxonomy) </br>
+6. [Visualize Results](#assign-taxonomy) </br>
+7. [Phyloseq](#phyloseq) </br>
+8. [Reformat and Export Files](#reformat-and-export-files) </br>
+9. [Import and Combine Files](#import-and-combine-files) </br>
 
 
 
-This protocol is for paired-end demultiplexed miseq sequences that have sufficient overlap to merge R1 and R2, and are going to be run on your computer, not on Hydra. It is broken up into sections, each section an `.R` document that can be opened in RStudio or the IDE/Editor of your choosing (such as [vscode](https://code.visualstudio.com/) or [positron](https://positron.posit.co/)). Once in RStudio, each command can be run using the `Run` button, or with `control + return`. The directions for each section are in that section file. You can download this entire pipeline using this link: [Metabarcoding Pipeline - R Documents](https://github.com/trippster08/Metabarcoding_on_PC_LAB/archive/refs/heads/main.zip). We will download the pipeline below in [R Preparation](#r-preparation) below.
+This protocol is for paired-end demultiplexed miseq sequences that have sufficient overlap to merge R1 and R2, and are going to be run on your computer or through the RStudio server on Hydra. As currently written, it can only run on MACOS, because Cutadapt will not run on Windows Machines. Please let us know if you need a workaround to run this on a Windows machine, and we can help with a workaround.
 
-However, before running RStudio, you must make sure the necessary programs are installed, and the illumina demultiplexed sequences have been downloaded.
+ The pipeline is broken up into sections, each section an `.R` document that can be opened in RStudio or the IDE/Editor of your choosing (such as [vscode](https://code.visualstudio.com/) or [positron](https://positron.posit.co/)). Once in RStudio, each command can be run using the `Run` button, or with `control + return`. The directions for each section are in that section file. You can download this entire pipeline using this link: [Metabarcoding Pipeline - R Documents](https://github.com/trippster08/Metabarcoding_on_PC_LAB/archive/refs/heads/main.zip). We will download the pipeline below in [R Preparation](#r-preparation).
 
-## 1 - Computer Preparation
+If running this pipeline locally on your computer, you must make sure the necessary programs are installed.  These programs are already installed on Hydra.
+
+## 1 - Computer Preparation (Local Run Only)
 ### Install and Update Computer Programs
 Make sure you have both R and RStudio already installed and updated on your computer. If you have an SI computer, you can load/update both through the Smithsonian's Self Service Application.
 
@@ -104,11 +103,14 @@ conda activate cutadapt
 ```
 cutadapt --version
 ```
-### Create a New Project
-The first thing to do is open RStudio and create a new project. If you already havea project directory for this project, select to create it from an "Existing Directory", and chose the directory that you will be using (this folder name will be the name of the project). Or select "New Directory" and name your new directory/project. RStudio will create this directory. Once you have created this project, RStudio will make this directory the current working directory, and you won't need to set your working directory later.
 
-### R Preparation
-First, we are goiong to download the entire pipeline into our project directory using the script shown below. Copy the code block below into the Console panel (usually the entire left panel, or the bottom left panel if the Source Editor is open on the top left) of RStudio and run it. This will download the pipeline unzip it, and remove the zipped file.
+## RStudio Preparation
+### Create a New RStudio Project
+If you are running the pipeline lcoally, open RStudio. If you are running on the RStudio Hydra server, go to the [Galaxy Server](galaxy.si.edu) on your browser of choice. Select the option to accews "R Studio (R4)".
+
+Create a new project. If you already have a project directory for this project, select to create it from an "Existing Directory", and chose the directory that you will be using (this folder name will be the name of the project). Or select "New Directory" and name your new directory/project. RStudio will create this directory. Once you have created this project, RStudio will make this directory the current working directory, and you won't need to set your working directory later.
+
+First, we are going to download the entire pipeline into our project directory using the script shown below. Copy the code block below into the Console panel (usually the entire left panel, or the bottom left panel if the Source Editor is open on the top left) of RStudio and run it. This will download the pipeline unzip it, and remove the zipped file.
 
 This is probably the only R code we will be running from the Console. We typically run all the scripts by opening each file in the Source Editor and running from there so we have a record of your analyses, including any changes made and any comments that may be needed along the way.
 
@@ -125,15 +127,15 @@ Next we install all the R libraries needed for this pipeline. We also set up our
 
 Open RStudio, and open `1_RstudioPrep.R` in the Source Editor (typically the top left pane). You can run all commands in the source editor using the `Run` button or `control + return`. All `*.R` files are in the `RFiles/` directory in the working directory and can be found using the "Files" tab in the Output pane, usually found at the bottom right. Clicking on the `*.R` file will open it in the Source Editor.
 
-[1.3 - Metabarcoding RStudioPrep.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/1_RStudioPrep.R)
+[1 - Metabarcoding RStudioPrep.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/1_RStudioPrep.R)
 
 ### Get Raw Reads
-Get raw reads. Whether you get them from Illumina basespace downloader or another way, all reads should already be in a directory. Place that direcectory in the main project directory. *NOTE: Remove any "undetermined" read files from the folder containing your raw reads. You do not want to include these reads in your analyses.*
+Get raw reads. Whether you get them from Illumina basespace downloader or another way, all reads should already be in a directory. Place that directory in the main project directory. *NOTE: Remove any "undetermined" read files from the folder containing your raw reads. You do not want to include these reads in your analyses.* 
 
 ## Cutadapt
 We use Cutadapt to remove primer sequences from our raw reads. This section ends with primer-trimmed sequences. Cutadapt will also demultiplex by gene. Cutadapt places trimmed reads into a gene-specific folder depending upon what primer is removed. If multiple amplicon regions were included in a single run, this will "demultiplex" by gene, even if the regions share an index. Trimmed reads will be save in a gene-specific directory: data/working/trimmed_sequences/<gene>
 
-[2 - Cutadapt-trim](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/2_Cutadapt_trim.R </br>
+[2 - Cutadapt-trim](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/2_Cutadapt_trim.R) </br>
 
 ## DADA2
 Here we use DADA2 to quality-filter and quality-trim reads, estimate error rates and denoise reads, merge paired reads, and remove chimeric sequences. This section ends with a sequence-table, which is a table containing columns of `ASV's` (Amplicon Sequence Variants), rows of `samples`, and cell values equal `# of reads`. a feature-table (a transposed sequence-table), and a representative-sequence fasta.
@@ -141,14 +143,20 @@ Here we use DADA2 to quality-filter and quality-trim reads, estimate error rates
 [3 - DADA2](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/3a_Dada2.R) </br>
 
 ## Assign Taxonomy
-Here we use an [RDP identifier](https://benjjneb.github.io/dada2/assign.html) through DADA2 and BLAST+ through [rBLAST](https://github.com/mhahsler/rBLAST) to assign taxonomic identities to ASV's. This section requires a reference library.  We will supply you with a reference library based on the [Midori](www.reference-midori.info) reference database, or you can supply your own. Open [4_TaxAssignment.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/4_TaxAssignment.R) and follow the directions.
+Here we use an [RDP identifier](https://benjjneb.github.io/dada2/assign.html) through DADA2 and BLAST+ through [rBLAST](https://github.com/mhahsler/rBLAST) to assign taxonomic identities to ASV's. This section requires a reference library.  We will supply you with a reference library based on the [Midori](www.reference-midori.info) reference database, or you can supply your own. 
+
+[4 - TaxAssignment.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/4_TaxAssignment.R)
 
 ## Visualize Results
 
-Here we primarily use the program [vegan](https://github.com/vegandevs/vegan) to visualize your results. We will explore our results multiple ways. Open [5_VisualizeResults.R](RStudio_Files/5_VisualizeResults.R) and follow the directions. vegan is a very expansive diversity tool and what we do here is only a fraction of it's capabilities. [vegan vignetes](https://vegandevs.r-universe.dev/vegan) is one place to find lots of links to other aspects of the program, although it gets a little into the weeds. Most of the visualization for this pipeline is from an unaffiliated website found here: [Vegan tutorial](https://peat-clark.github.io/BIO381/veganTutorial.html). Open [5_VisualizeResults.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/5_VisualizeResults.R) and follow the directions.
+Here we primarily use the program [vegan](https://github.com/vegandevs/vegan) to visualize your results. We will explore our results multiple ways. Open [5_VisualizeResults.R](RStudio_Files/5_VisualizeResults.R) and follow the directions. vegan is a very expansive diversity tool and what we do here is only a fraction of it's capabilities. [vegan vignetes](https://vegandevs.r-universe.dev/vegan) is one place to find lots of links to other aspects of the program, although it gets a little into the weeds. Most of the visualization for this pipeline is from an unaffiliated website found here: [Vegan tutorial](https://peat-clark.github.io/BIO381/veganTutorial.html).
+
+[5 - VisualizeResults.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/5_VisualizeResults.R)
 
 ## phyloseq
-[phyloseq](https://github.com/joey711/phyloseq) is a R library that allows for manipulation, visualization, and analysis of metabarcoding data. This section describes how to set up and load your denoised results from DADA2 into phyloseq, how to perform some preliminary analyses, ana how to visualize a few basic results. Open [6_phyloseq.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/6_phyloseq.R) and follow the directions.
+[phyloseq](https://github.com/joey711/phyloseq) is a R library that allows for manipulation, visualization, and analysis of metabarcoding data. This section describes how to set up and load your denoised results from DADA2 into phyloseq, how to perform some preliminary analyses, ana how to visualize a few basic results.
+
+[6_phyloseq.R](https://github.com/trippster08/Metabarcoding_on_PC_LAB/blob/main/RFiles/6_phyloseq.R)
 
 ## Reformat and Export Files
 Here we create and export variants of the sequence-table created in section 3. Many of these are not necessary for your analysis, but may be useful in some cases, as described in the section descriptions. 
