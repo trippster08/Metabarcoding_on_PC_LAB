@@ -20,6 +20,7 @@ BiocManager::install("ShortRead", ask = FALSE)
 # If you get a message saying some packages have more recent versions available,
 # and asking if you want to update them, chose "1: ALL".
 install.packages("digest")
+install.packages("R.utils")
 install.packages("tidyverse")
 install.packages("seqinr")
 install.packages("ape")
@@ -92,8 +93,18 @@ raw_reads <- list.files(pattern = ".fastq.gz", recursive = TRUE)
 head(raw_reads)
 
 # Copy the read files to the "data/raw" directory, and confirm that they are
-# there.
-file.copy(raw_reads, "data/raw", recursive = TRUE)
+# there. This loop will skip copying any files that already exist in the
+# destination directory.
+for (file in raw_reads) {
+  dest_file <- file.path("data/raw", basename(file))
+  if (!file.exists(dest_file)) {
+    file.copy(file, dest_file)
+    message("Copied: ", file)
+  } else {
+    message("Skipped (already exists): ", file)
+  }
+rm(dest_file)
+}
 head(list.files("data/raw", pattern = ".fastq.gz"))
 
 # Make a list of genes that will be analyzed in this pipeline, regardless of
