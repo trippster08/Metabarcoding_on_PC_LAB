@@ -142,8 +142,13 @@ for (gene in genes) {
 
 
 ## Run Cutadapt ================================================================
+# Save the path to the cutadapt binary.
 
-# Save the path to the cutadapt executable file. Your path will be different.
+# Use this path if you are running on the RStudio server.
+cutadapt_binary <- "/share/apps/bioinformatics/cutadapt/5.0/bin/cutadapt"
+
+# If you are running locally and installed cutadapt yourself, change the path
+# below to your installed cutadapt binary.
 cutadapt_binary <- "/home/macdonaldk/.conda/envs/cutadapt/bin/cutadapt"
 
 # The following for loop runs cutadapt on paired samples, one pair at a time.
