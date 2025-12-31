@@ -1,4 +1,6 @@
 # 8 ASSIGN TAXONOMY ############################################################
+# This is a work in progress and in the prelimiary stages of development, please
+# contact me for any help or questions.
 
 ## Load Libraries = ============================================================
 # Load all R packages you may need, if necessary
@@ -35,10 +37,8 @@ reference_fasta <- sub("\\.gz$", "", paste0("ref/", ref_gzip))
 gunzip(paste0("ref/", ref_gzip), destname = reference_fasta, remove = TRUE)
 
 ## Assign Taxonomy With DADA2 ==================================================
-# Assign taxonomy. tryRC determines whether to also include the reverse
-# complement of each sequence. outputBootstraps results in a second table with
-# bootstrap support values for each taxonomic assignment. minBoot gives the
-# minimum bootstrap required to assign taxonomy. Use whatever table you obtained
+# We first assign taxonomy using the assignTaxonomy function in DADA2.
+# Use whatever table you obtained
 # for your earlier analyses (e.g. seqtab.nochim). This command can take a long
 # time for large reference databases and large numbers of ASVs. Your reference
 # file will have a different path and name then here, please make sure to use
@@ -56,12 +56,9 @@ gunzip(paste0("ref/", ref_gzip), destname = reference_fasta, remove = TRUE)
 #>Level1;Level2;;Level4;Level5;Level6
 #CGCTAGAAAGTCGTAGAAGGCTCGGAGGTTTGAAGCATCGCCCGATGGGATCTCGTTGCTGTAGCATGAGTACGGACATTCAGGGATCATAGGATAC"
 
+# We want to define the taxonomic levels of our reference database.
 # taxLevels defines what taxonomic rank each of the levels shown in the above
 # example represents.
-# If you used your own database, change the path after "seqtab_nochim" to your
-# reference database.
-
-# We want to define the taxonomic levels of our reference database.
 tax_levels <- c(
   "Phylum",
   "Class",
@@ -70,7 +67,13 @@ tax_levels <- c(
   "Genus",
   "species"
 )
-
+# Assign taxonomy
+# If you used your own database, change the path after "seqtab_nochim" to your
+# reference database.
+# tryRC determines whether to also include the reverse
+# complement of each sequence. outputBootstraps results in a second table with
+# bootstrap support values for each taxonomic assignment. minBoot gives the
+# minimum bootstrap required to assign taxonomy.
 taxonomy <- assignTaxonomy(
   seqtab_nochim,
   reference_fasta,
@@ -155,12 +158,37 @@ write.table(
 # One of the reasons I'm using rBLAST is that it has a command to make a
 # BLAST-formatted database from a fasta file.
 
-# Make the blast database from the supplied DADA2-formatted Midori reference
-#  database, or whatever database you are using.
-# The first line is the name of the reference database, change to the database
-# you are using. The second line is the name you want to give your BLAST
-# database. Currently, this is set up to create a directory in ref/ with the
-# name you chose, then will create all the necessary database files in that
+# We can either use the previous DADA2-formatted Midori reference database, or 
+# your own personal database, or use the NCBI genbank database installed in
+# Hydra.
+
+# First, we need to make sure BLAST+ is installed on your computer, or is in
+# your path if you are using Hydra and it's already installed version.
+# Directions for installing BLAST+ locally are coming soon. rBLAST also has
+# directions for installing BLAST+ on their GitHub page:
+# https://github.com/mhahsler/rBLAST/blob/devel/INSTALL. These instructions
+# also include how to ensure the path is set correctly.
+
+# If you are running BLAST+ on Hydra, add the blast+ program binary to the
+# path so it can be run with rBLAST. This needs to be run every time you open
+# this project, just like loading packages. This path will be automatically
+# updated to use the latest version of the database
+Sys.setenv(
+  PATH = paste(Sys.getenv("PATH"),
+  "/share/apps/bioinformatics/blast/2.15.0/bin",
+  sep = .Platform$path.sep)
+)
+
+
+### DADA2 formatted Reference Library ------------------------------------------
+# If we want to use the DADA2 formatted library from the DAADA2 taxonomic
+# assignment step, we first need to make a BLAST database from the fasta file
+# we downloaded earlier. We use the makeblastdb function from rBLAST to do this
+
+# The first line is the name of the reference database object - change to the
+# database you are using. The second line is the name you want to give your
+# BLAST database. Currently, this is set up to create a directory in ref/ with
+# the name you chose, and will create all the necessary database files in that
 # directory, all using the chosen name also. I use the same directory name and
 # file name, you do not have to.
 makeblastdb(
@@ -169,10 +197,11 @@ makeblastdb(
   dbtype = "nucl"
 )
 
-# Next we load this database into R in the correct format for rBLAST. Give
+# Next we create a BLAST database object for this database. This command opens
+# the database for running BLAST via predict. Give
 # the relative path to the database, and include the name you gave the database
 # in the previous step. I.e. db should be the same here as db_name is above
-midori_coi_db <- blast(db = "ref/midori_COI_genus/midori_COI_genus")
+midori_coi_db <- blast(db = "ref/midori_COI/midori_COI", type = "blastn")
 
 # We need to have our representative sequences (the sequences we are going to
 # blast). We have to reformat our representative-sequence table to be a named
@@ -184,9 +213,10 @@ sequences_dna <- DNAStringSet(setNames(
   repseq_nochim_md5_asv$ASV,
   repseq_nochim_md5_asv$md5
 ))
+# Look at this object
 sequences_dna
 # You can also get this from the fasta file we downloaded earlier.
-sequences_fasta <- readDNAStringSet("data/results/PROJECTNAME_rep-seq.fas")
+sequences_fasta <- readDNAStringSet("data/results/PROJECTNAME_rep-seq_GENE.fas")
 
 # They make the same thing.
 head(sequences_dna)
@@ -196,7 +226,7 @@ head(sequences_fasta)
 tax_blast <- predict(
   midori_coi_db,
   sequences_dna,
-  outfmt = "6 qseqid sseqid pident",
+  outfmt = "6 qseqid sseqid pident saccver staxids",
   BLAST_args = "-perc_identity 85 -max_target_seqs 1 -qcov_hsp_perc 80"
 )
 View(tax_blast)
@@ -212,30 +242,134 @@ taxonomy_blast <- tax_blast %>%
   )
 View(taxonomy_blast)
 
+### Hydra NCBI Reference Library -----------------------------------------------
+# Hydra has a local copy of the NCBI Genbank database installed. It has the
+# nt database, but also a smaller mitochondrial-only database called "mito". We
+# will use this mito database for our BLAST searches.
 
-# Now lets combine the two taxonomy tables to see how the the two methods
-# compare
-taxonomy_rdp_blast <- left_join(
-  taxonomy_rdp,
-  taxonomy_blast,
-  join_by(ASV == qseqid)
+# Create a BLAST database object of the hydra blast mito database, this opens
+# it for blasting later via predict
+blast_mito_db <- blast(db = "/scratch/dbs/blast/v5/mito")
+
+# We need to have our representative sequences (the sequences we are going to
+# blast). We have to reformat our representative-sequence table to be a named
+# vector. Here is our representative sequence table from DADA2.
+View(repseq_nochim_md5_asv)
+
+# Make a DNAStringSet object from our representative sequences
+sequences_dna <- DNAStringSet(setNames(
+  repseq_nochim_md5_asv$ANML$ASV,
+  repseq_nochim_md5_asv$ANML$md5
+))
+sequences_dna
+
+# Set the outputs we want from blast. You can add your own.
+# qseqid = ASV hast of query sequence
+# pident = % identity of query sequence with reference
+# saccver = ncbi accession number for reference sequence
+# staxids = ncbi taxonomic identifior of reference sequence
+fmt <- "qseqid pident saccver staxids"
+# Finally, we blast our representative sequences against the database we created
+tax_blast <- predict(
+  blast_mito_db,
+  sequences_dna,
+  custom_format = fmt,
+  BLAST_args = "-perc_identity 85 -max_target_seqs 1 -qcov_hsp_perc 80"
 )
+# Make taxid a character instead of a number, for later use (plus, it's not a
+# number, it's an identifier)
+tax_blast$staxids <- as.character(tax_blast$staxids)
+# Let's also change column headings to make more sense
+tax_blast <- setNames(tax_blast, c("ASV", "%Identity", "Accession", "taxid"))
+View(tax_blast)
 
+# Currently, the Hydra NCBI mito database does not have taxonomic information
+# included, so we cannot get classifications directly, only Taxonomic IDs
+# (taxIDs). We therefore need to use taxize to get the taxonomic classifications
+# from the taxids. This can take some time.
+
+# Use taxize to get classifications from taxid (staxids). Outputs a list of
+# taxids, each with a dataframe containing taxid, rank, and name for that rank.
+taxonomy <- classification(tax_blast$taxid, db = "ncbi")
+
+### Make Classification Table --------------------------------------------------
+# I want a single table of classifications for each taxid, not a list of
+# dataframes. We will then add these classifications to the tax_blast table.
+# This is a bit involved, unfortunately
+
+# Keep only unique taxids from taxonomy (remove duplicates).
+taxonomy_unique <- taxonomy[!duplicated(names(taxonomy))]
+# Make a vector of unique taxids.
+taxid_unique <- names(taxonomy_unique)
+
+# Save the classification ranks that we want to keep as a vector. You can save
+# whatever ranks you want, but make sure they match the rank names used by NCBI.
+tax_ranks <- c("kingdom", "phylum", "class", "order", "family", "genus", "species")
+
+# Make a tibble with the number of rows equal to the number of unique taxids,
+# and the number of columns equal to the number of ranks
+taxonomy_table <- as_tibble(
+  matrix("", nrow = length(taxid_unique), ncol = length(ranks)),
+  .name_repair = "minimal"
+)
+# Name the columns from the ranks vector.
+colnames(taxonomy_table) <- tax_ranks
+# Add a first column to the tibble as the taxids.
+taxonomy_table <- add_column(taxonomy_table, taxid = taxid_unique, .before = 1)
+
+# For each item in the taxonomy_unique list, and for each rank in each list
+# item, take the value for that item and rank and save it in the tibble at the
+# row for that item and under the column for that rank. If the rank does not
+# exist for that item, then use a blank. This fills the blank tibble we just
+# made.
+for (i in seq_along(taxonomy_unique)) {
+  df <- taxonomy_unique[[i]]
+  for (r in ranks) {
+    taxonomy_table[i,r] <- ifelse(any(df$rank == r),
+                                  df$name[df$rank == r],
+                                  "")
+  }
+}
+
+### Add Classification to Taxonomy Table ---------------------------------------
+# Left join the taxonomy_table to tax_blast.
+tax_blast_class <- left_join(
+  tax_blast,
+  taxonomy_table,
+  by = taxid
+)
+View(tax_blast_class)
 
 # Export this table as a .tsv file. I name it with Project Name,
-# the reference library used, and taxonomy (vs. speciesID).
+# the reference library used, and gene.
 write.table(
-  taxonomy,
-  file = "data/results/PROJECTNAME_REFERENCE_taxonomy.tsv",
+  tax_blast_class,
+  file = "data/results/GENE/PROJECT_NCBI_blast_taxonomy_GENE.tsv",
   quote = FALSE,
   sep = "\t",
   row.names = FALSE
 )
 
-save(
-  midori_coi_db,
-  sequences_dna,
-  taxonomy_blast,
-  taxonomy_rdp_blast,
-  file = "tax_rdp_blast.RData"
+
+### Combine DADA2 and BLAST Taxonomy Results -----------------------------------
+# We can also combine the DADA2 and BLAST taxonomic assignment results into a
+# single table to get a direct comparison of the two methods.
+taxonomy_rdp_blast <- left_join(
+  taxonomy_rdp,
+  tax_blast_class,
+  by = ASV
 )
+
+
+# Export this table as a .tsv file.
+write.table(
+  taxonomy,
+  file = "data/results/GENE/PROJECTNAME_MIDORI_NCBI_BLAST_rdp_taxonomy_GENE.tsv",
+  quote = FALSE,
+  sep = "\t",
+  row.names = FALSE
+)
+
+
+# Save all objects to this point.
+save.image(file = "data/working/4_Assign_Taxonomy.RData")
