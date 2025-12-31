@@ -87,7 +87,7 @@ rc_forward_primer_files <- list.files(
 RC_primers <- sub("F_RC\\.fas$", "", rc_forward_primer_files)
 RC_primers
 # Find all the read files in the project directory, save their paths, and
-# confirm. Basespace saves the reads in sample-specific folders, using
+# confirm. BaseSpace saves the reads in sample-specific folders, using
 # "recursive = TRUE" allows us to find all read files in the working directory
 raw_reads <- list.files(pattern = ".fastq.gz", recursive = TRUE)
 head(raw_reads)

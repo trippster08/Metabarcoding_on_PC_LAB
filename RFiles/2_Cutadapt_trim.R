@@ -261,7 +261,7 @@ save.image(file = "data/working/2_trim.RData")
 # entirety, or the read is removed
 
 # -n 2 This is the number of times to run cutadapt on each sample. You may need
-# to run cutadapt twice if you have readthrough and need to remove primers from
+# to run cutadapt twice if you have read-through and need to remove primers from
 # the 3' end as well as the 5' end. Cutadapt will only remove one primer from
 # a sample each time it's run.
 

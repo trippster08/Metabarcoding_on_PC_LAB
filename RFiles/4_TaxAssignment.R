@@ -89,7 +89,7 @@ save(taxonomy, file = "data/working/tax_rdp.Rdata")
 View(taxonomy$tax)
 View(taxonomy$boot)
 
-# You can check to see all the uniqe values exist in each column
+# You can check to see all the unique values exist in each column
 unique(taxonomy$tax[, "Phylum"])
 unique(taxonomy$tax[, "Class"])
 unique(taxonomy$tax[, "Order"])
@@ -103,7 +103,7 @@ table(taxonomy$tax[, "Phylum"])
 # what kind of join you use since the two tables should have the exact same
 # number of rows and row headings (actually, now column 1)). I amend bootstrap
 # column names with "_boot" (e.g. the bootstrap column for genus would be
-# "Genus_boot"). I also add the md5 hash, and rearrange the columnns
+# "Genus_boot"). I also add the md5 hash, and rearrange the columns
 taxonomy_rdp <- inner_join(
   as_tibble(taxonomy$tax, rownames = "ASV"),
   as_tibble(taxonomy$boot, rownames = "ASV"),
@@ -151,7 +151,7 @@ write.table(
 
 # We can also assign taxonomy using BLAST. Here we will use the program rBLAST
 # to identify our ASVs. rBLAST allows you to connect directly to the NCBI
-# server, or use a locally saved refernce database (in BLAST format)
+# server, or use a locally saved reference database (in BLAST format)
 # One of the reasons I'm using rBLAST is that it has a command to make a
 # BLAST-formatted database from a fasta file.
 
@@ -171,7 +171,7 @@ makeblastdb(
 
 # Next we load this database into R in the correct format for rBLAST. Give
 # the relative path to the database, and include the name you gave the database
-# in the previous step. I.e. db should be the same here as db_name is aboove
+# in the previous step. I.e. db should be the same here as db_name is above
 midori_coi_db <- blast(db = "ref/midori_COI_genus/midori_COI_genus")
 
 # We need to have our representative sequences (the sequences we are going to
