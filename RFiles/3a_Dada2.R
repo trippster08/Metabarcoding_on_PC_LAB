@@ -440,7 +440,7 @@ for (gene in genes) {
 }
 
 # We can visualize the estimated error rates to make sure they don't look too
-# crazy. The red lines are error rates expected under the "...nominal defintion
+# crazy. The red lines are error rates expected under the "...nominal definition
 # of the Q-score." The black dots are "...observed error rates for each
 # consensus quality score." The black line shows the "...estimated error rates
 # after convergence of the machine-learning algorithm." I think the main things
@@ -712,8 +712,8 @@ for (gene in genes) {
     Non_Chimeras = as.integer(rowSums(seqtab_nochim[[gene]]))
   )
 
-  # Then we are going to add the postfiltered read count data to the three count
-  # data objects we already have (raw, trimmed, filtered).
+  # Then we are going to add the post-filtered read count data to the three
+  # count data objects we already have (raw, trimmed, filtered).
   track_reads[[gene]] <- tibble(
     Sample_ID = names(sequence_counts_raw),
     Raw_Reads = as.numeric(sequence_counts_raw),
