@@ -32,7 +32,7 @@ length(reads_to_trim_R)
 sample_names_raw <- sapply(
   strsplit(
     basename(
-      reads_to_trim[str_detect(reads_to_trim, "R1_001.fastq.gz")]
+      reads_to_trim[str_detect(reads_to_trim, "_R1(?=[_.])")]
     ),
     "_S\\d{1,3}_"
   ),
@@ -45,7 +45,7 @@ head(sample_names_raw)
 sequence_counts_raw <- sapply(
   paste(
     path_to_raw_reads,
-    reads_to_trim[str_detect(reads_to_trim, "R1_001.fastq.gz")],
+    reads_to_trim[str_detect(reads_to_trim, "_R1(?=[_.])")],
     sep = "/"
   ),
   function(file) {
