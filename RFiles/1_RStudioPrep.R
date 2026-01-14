@@ -89,7 +89,7 @@ RC_primers
 # Find all the read files in the project directory, save their paths, and
 # confirm. BaseSpace saves the reads in sample-specific folders, using
 # "recursive = TRUE" allows us to find all read files in the working directory
-raw_reads <- list.files(pattern = ".fastq.gz", recursive = TRUE)
+raw_reads <- list.files(pattern = "\\.fastq\\.gz", recursive = TRUE)
 head(raw_reads)
 
 # Copy the read files to the "data/raw" directory, and confirm that they are
@@ -105,7 +105,7 @@ for (file in raw_reads) {
   }
 rm(dest_file)
 }
-head(list.files("data/raw", pattern = ".fastq.gz"))
+head(list.files("data/raw", pattern = "\\.fastq\\.gz"))
 
 # Make a list of genes that will be analyzed in this pipeline, regardless of
 # whether it's one or many. Make sure the primer sequences for these are in
