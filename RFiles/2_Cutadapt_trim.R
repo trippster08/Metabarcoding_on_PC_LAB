@@ -17,11 +17,11 @@ getwd()
 load("data/working/1_RStudioPrep.RData")
 
 # Make a list of all the files in your "data/raw" folder for trimming.
-reads_to_trim <- list.files("data/raw", pattern = ".fastq.gz")
+reads_to_trim <- list.files("data/raw", pattern = "\\.fastq\\.gz$")
 head(reads_to_trim)
 # Separate files by read direction (R1,R2), and save each
-reads_to_trim_F <- reads_to_trim[str_detect(reads_to_trim, "R1_001.fastq.gz")]
-reads_to_trim_R <- reads_to_trim[str_detect(reads_to_trim, "R2_001.fastq.gz")]
+reads_to_trim_F <- reads_to_trim[str_detect(reads_to_trim, "_R1(?=[_.])")]
+reads_to_trim_R <- reads_to_trim[str_detect(reads_to_trim, "_R2(?=[_.])")]
 
 # Look to ensure that there are the same number of F and R reads
 length(reads_to_trim_F)
