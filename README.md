@@ -1,4 +1,5 @@
 ![GitHub Release](https://img.shields.io/github/v/release/trippster08/Metabarcoding_on_RStudio?color=green)
+[![DOI](https://zenodo.org/badge/648678451.svg)](https://doi.org/10.5281/zenodo.18854512)
 
 # Metabarcoding Pipeline on RStudio
 1. [Computer Preparation](#computer-preparation) </br>
